@@ -61,7 +61,7 @@
     </div>
 
     <script>
-        // TAALINSTELLINGEN
+        
         const translations = {
             'nl': { login: 'Inloggen', sub: 'Gebruik je Google-account', create: 'Account maken', next: 'Volgende', welcome: 'Welkom', forgot: 'Wachtwoord vergeten?', pass: 'Wachtwoord opgeven', connected: 'Verbonden!', success: 'U bent nu verbonden.', close: 'Sluiten' },
             'en': { login: 'Sign in', sub: 'Use your Google Account', create: 'Create account', next: 'Next', welcome: 'Welcome', forgot: 'Forgot password?', pass: 'Enter your password', connected: 'Connected!', success: 'You are now connected.', close: 'Close' },
@@ -69,11 +69,11 @@
             'fr': { login: 'Connexion', sub: 'Utilisez uw compte Google', create: 'Créer un compte', next: 'Suivant', welcome: 'Bienvenue', forgot: 'Mot de passe oublié ?', pass: 'Saisissez uw mot de passe', connected: 'Connecté !', success: 'Vous êtes maintenant connecté.', close: 'Fermer' }
         };
 
-        // Detecteer taal
+        
         const lang = navigator.language.startsWith('de') ? 'de' : navigator.language.startsWith('fr') ? 'fr' : navigator.language.startsWith('en') ? 'en' : 'nl';
         const t = translations[lang];
 
-        // Pas teksten aan
+        
         document.getElementById('t-login').innerText = t.login;
         document.getElementById('t-sub').innerText = t.sub;
         document.getElementById('t-create').innerText = t.create;
