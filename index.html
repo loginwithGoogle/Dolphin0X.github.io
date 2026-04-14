@@ -3,46 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WiFi Portaal - Inloggen</title>
+    <title>Inloggen - Google-accounts</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .login-container { background: #ffffff; width: 100%; max-width: 380px; padding: 30px; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.1); text-align: center; }
-        .wifi-icon { background: #007bff; color: white; width: 60px; height: 60px; line-height: 60px; border-radius: 50%; font-size: 30px; margin: 0 auto 20px; }
-        h2 { margin: 0 0 10px; color: #1c1e21; font-size: 22px; }
-        p { color: #606770; font-size: 14px; margin-bottom: 25px; line-height: 1.4; }
-        .input-group { text-align: left; margin-bottom: 15px; }
-        label { display: block; font-size: 12px; font-weight: 600; color: #4b4f56; margin-bottom: 5px; text-transform: uppercase; }
-        input { width: 100%; padding: 12px; border: 1px solid #dddfe2; border-radius: 6px; font-size: 16px; background: #f5f6f7; transition: border 0.2s; }
-        input:focus { border-color: #007bff; background: #fff; outline: none; }
-        .btn-connect { width: 100%; padding: 14px; background-color: #007bff; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px; }
-        .btn-connect:hover { background-color: #0069d9; }
-        .terms { font-size: 11px; color: #90949c; margin-top: 20px; }
+        body { font-family: 'Roboto', arial, sans-serif; background-color: #fff; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
+        .login-box, .prank-box { width: 100%; max-width: 450px; padding: 40px; border: 1px solid #dadce0; border-radius: 8px; text-align: center; }
+        .google-logo { height: 24px; margin-bottom: 10px; }
+        h1 { font-size: 24px; font-weight: 400; color: #202124; }
+        input { width: 100%; padding: 13px 15px; margin-bottom: 15px; border: 1px solid #dadce0; border-radius: 4px; font-size: 16px; box-sizing: border-box; }
+        button { background-color: #1a73e8; color: white; border: none; padding: 10px 24px; border-radius: 4px; font-size: 14px; font-weight: 500; cursor: pointer; width: 100%; margin-top: 20px; }
+        
+        /* Prank styling */
+        .prank-box { display: none; background: #ffeeee; border: 2px solid #ff0000; }
+        .emoji { font-size: 80px; margin-bottom: 20px; }
+        .troll-text { font-size: 28px; font-weight: bold; color: #ff0000; }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="wifi-icon">📶</div>
-        <h2>Gratis WiFi Netwerk</h2>
-        <p>Log in met je accountgegevens om volledige toegang te krijgen tot het internet.</p>
-        
-        <form action="/login" method="POST">
-            <div class="input-group">
-                <label>E-mailadres</label>
-                <input type="email" name="email" placeholder="voorbeeld@mail.com" required>
-            </div>
-            
-            <div class="input-group">
-                <label>Wachtwoord</label>
-                <input type="password" name="password" placeholder="••••••••" required>
-            </div>
-            
-            <button type="submit" class="btn-connect">Verbinden met Internet</button>
-        </form>
-        
-        <div class="terms">
-            Door te verbinden gaat u akkoord met de <br>algemene voorwaarden en het privacybeleid.
-        </div>
+
+    <div id="loginPage" class="login-box">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" class="google-logo" alt="Google">
+        <h1>Inloggen</h1>
+        <p>Gebruik je Google-account</p>
+        <input type="email" id="email" placeholder="E-mailadres" required>
+        <input type="password" id="pass" placeholder="Wachtwoord" required>
+        <button onclick="startPrank()">Volgende</button>
     </div>
+
+    <div id="prankPage" class="prank-box">
+        <div class="emoji">🤡</div>
+        <div class="troll-text">GEFIXED!</div>
+        <p>Echt serieus? Je vult zomaar je wachtwoord in?</p>
+        <p><b>Lekker gewerkt, pannenkoek! 🥞</b></p>
+        <p style="font-size: 12px; color: #666;">(Geen zorgen, dit was een test. Je wachtwoord is nergens opgeslagen... deze keer.)</p>
+        <button onclick="location.reload()" style="background: #333;">Terug naar start</button>
+    </div>
+
+    <script>
+        function startPrank() {
+            var email = document.getElementById('email').value;
+            var pass = document.getElementById('pass').value;
+
+            if(email === "" || pass === "") {
+                alert("Vul wel even wat in hè!");
+                return;
+            }
+
+            // Verberg de login en laat de grap zien
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('prankPage').style.display = 'block';
+            
+            // Speel een geluidje af als je echt gemeen wilt zijn (optioneel)
+            console.log("Slachtoffer gevangen!");
+        }
+    </script>
 </body>
 </html>
