@@ -1,1 +1,146 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informatie Portaal & Reacties</title>
+    <style>
+        :root {
+            --accent: #3498db;
+            --bg: #f4f7f6;
+            --text: #333;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: -30px auto 40px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 { border-left: 5px solid var(--accent); padding-left: 15px; }
+
+        .info-section { margin-bottom: 40px; }
+
+        /* Reactie Sectie Styling */
+        .comment-section {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .comment-form input, .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box; /* Zorgt dat padding binnen de breedte valt */
+        }
+
+        .comment-form button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #commentsList {
+            margin-top: 30px;
+            list-style: none;
+            padding: 0;
+        }
+
+        .comment-item {
+            background: white;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 10px;
+        }
+
+        .comment-item strong { color: var(--accent); }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Mijn Informatie Platform</h1>
+    <p>Lees de info en laat weten wat je ervan vindt!</p>
+</header>
+
+<div class="container">
+    
+    <section class="info-section">
+        <h2>Belangrijke Informatie</h2>
+        <p>Welkom op mijn website. Hier kun je informatie vinden over diverse onderwerpen. Dit is een plek voor feiten, onderzoek en discussie.</p>
+        <p>Je kunt deze tekst eenvoudig aanpassen in de <code>index.html</code> code om jouw eigen verhaal te vertellen.</p>
+    </section>
+
+    <hr>
+
+    <section class="comment-section">
+        <h3>Laat een reactie achter</h3>
+        <form class="comment-form" id="commentForm">
+            <input type="text" id="userName" placeholder="Jouw naam" required>
+            <textarea id="userComment" rows="4" placeholder="Wat wil je zeggen?" required></textarea>
+            <button type="submit">Plaats reactie</button>
+        </form>
+
+        <div id="commentsList">
+            <p style="color: #888;">Nog geen reacties. Wees de eerste!</p>
+        </div>
+    </section>
+</div>
+
+<script>
+    const commentForm = document.getElementById('commentForm');
+    const commentsList = document.getElementById('commentsList');
+
+    commentForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('userName').value;
+        const comment = document.getElementById('userComment').value;
+        const date = new Date().toLocaleDateString();
+
+        // Maak een nieuw element voor de reactie
+        const commentDiv = document.createElement('div');
+        commentDiv.classList.add('comment-item');
+        commentDiv.innerHTML = `<strong>${name}</strong> <small>op ${date}</small><p>${comment}</p>`;
+
+        // Verwijder de "Nog geen reacties" tekst als die er staat
+        if (commentsList.innerHTML.includes("Nog geen reacties")) {
+            commentsList.innerHTML = '';
+        }
+
+        // Voeg de reactie bovenaan toe
+        commentsList.prepend(commentDiv);
+
+        // Maak de velden leeg
+        commentForm.reset();
+    });
+</script>
+
+</body>
+</html>
