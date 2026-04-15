@@ -1,1 +1,121 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mijn Video Zoeker</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: white;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
 
+        header {
+            width: 100%;
+            padding: 20px;
+            background-color: #1e1e1e;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .search-box {
+            margin: 30px 0;
+            display: flex;
+            gap: 10px;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 12px;
+            border-radius: 25px;
+            border: 2px solid #333;
+            background-color: #000;
+            color: white;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: #ff0000;
+        }
+
+        button {
+            padding: 10px 25px;
+            border-radius: 25px;
+            border: none;
+            background-color: #ff0000;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #cc0000;
+            transform: scale(1.05);
+        }
+
+        /* De video speler */
+        .video-wrapper {
+            width: 90%;
+            max-width: 900px;
+            aspect-ratio: 16 / 9;
+            background-color: #000;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            border: 1px solid #333;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .info-text {
+            margin-top: 15px;
+            color: #888;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>📺 Video Lounge Search</h1>
+    </header>
+
+    <form class="search-box" id="searchForm">
+        <input type="text" id="searchInput" placeholder="Zoek een video..." required>
+        <button type="submit">Zoeken</button>
+    </form>
+
+    <div class="video-wrapper">
+        <iframe id="videoPlayer" src="https://www.youtube.com/embed?listType=search&list=trending" allowfullscreen></iframe>
+    </div>
+
+    <p class="info-text">Typ hierboven iets en druk op 'Zoeken' om YouTube te doorzoeken.</p>
+
+    <script>
+        const form = document.getElementById('searchForm');
+        const input = document.getElementById('searchInput');
+        const player = document.getElementById('videoPlayer');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Zorg dat de pagina niet herlaadt
+            const query = encodeURIComponent(input.value);
+            // We updaten de 'list' parameter van de YouTube embed URL
+            player.src = `https://www.youtube.com/embed?listType=search&list=${query}`;
+        });
+    </script>
+
+</body>
+</html>
